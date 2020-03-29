@@ -24,7 +24,7 @@ class App extends Component {
     const personIndex=this.state.persons.findIndex(p=>{
       return p.id===id;
     });
-
+//Comment
    const persons=[...this.state.persons];
    persons[personIndex].score++;
    this.setState({persons:persons});
