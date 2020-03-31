@@ -1,6 +1,7 @@
 import React from 'react';
 import  './Person.css';
 
+
 const Person =(props)=>{
 return(
     <div className="Person">
@@ -9,7 +10,7 @@ return(
   <h2>Age : <input type="number" className="AgeInput" min="0" max="60" defaultValue={props.age} onChange ={props.changed}/></h2> 
   <h3>Situation : {props.situation}</h3>
   <h3>Score : {(props.children)?props.children:0}</h3>
-  <button onClick={props.click}>+</button>
+  <button  onClick={props.click} >+</button>
 </div>
 );
 }

@@ -1,7 +1,8 @@
 import React ,{Component} from 'react';
 import './App.css';
 import Person from './Person/Person'
-
+import { green, red, lightgreen, white } from 'color-name';
+import Radium from 'radium';
 
 class App extends Component {
   state={
@@ -52,34 +53,49 @@ class App extends Component {
     persons.splice(personIndex,1);
     this.setState({persons:persons});
   }
+  
   render(){
-    let persons=(
-    <div>
-    {this.state.persons.map((person,index)=>{
-            return(
-              <Person
-       delete={()=>this.deletePersonHandler(person.id)}       
-       key={person.id}        
-      name={person.name} 
-      surname={person.surname}
-      age={person.age}
-      click={()=>this.switchScoreHandler(person.id)}
-      changed={(e)=>this.ageChanged(e,person.id)}
-      situation={person.situation}
-      >
-        {person.score}
-        </Person>
-            )
-          })}
-    </div>
-          );
+    const style = {
+      backgroundColor:'green',
+      color:'white',
+      ':hover':{
+        backgroundColor:'salmon',
+        color:'white'
+      }
+    };
+    let persons=null;
+    if(this.state.showBlocks){
+      style.backgroundColor="red";
+      persons=(
+        <div>
+        {this.state.persons.map((person,index)=>{
+                return(
+                  <Person
+           delete={()=>this.deletePersonHandler(person.id)}       
+           key={person.id}        
+          name={person.name} 
+          surname={person.surname}
+          age={person.age}
+          click={()=>this.switchScoreHandler(person.id)}
+          changed={(e)=>this.ageChanged(e,person.id)}
+          situation={person.situation}
+          
+          >
+            {person.score}
+            </Person>
+                )
+              })}
+        </div>
+              );
+    }
+    
           
   return (
     <div className="App">
-      {this.state.showBlocks?persons:null}
+      {persons}
       <div>
       <button  onClick={this.switchNameHander.bind(this,"********")}>Hide Names</button>
-      <button  onClick={this.hideBlocksHander}>{this.state.showBlocks? "Hide Blocks":"Show Blocks"}</button>
+      <button  style={style} onClick={this.hideBlocksHander}>{this.state.showBlocks? "Hide Blocks":"Show Blocks"}</button>
       </div>
     </div>
     //React.createElement("div",{className:'Person'},React.createElement(Person,{name:'Yassine',surname:'Ezzaghouani',age:'26'},null))
@@ -88,4 +104,4 @@ class App extends Component {
 }
 }
 
-export default App;
+export default Radium(App);
