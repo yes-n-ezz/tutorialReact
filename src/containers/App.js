@@ -1,15 +1,14 @@
 import React ,{Component} from 'react';
-import './App.css';
-import Person from './Person/Person'
-import { green, red, lightgreen, white } from 'color-name';
-import Radium from 'radium';
-
+import classes from './App.module.css';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 class App extends Component {
   state={
     persons:[
       {id:1,gender:"Male",name:'Yassine',surname:'Ezzaghouani',age:12,score:0,situation:''},
       {id:2,gender:"Male",name:'Elias',surname:'Ben Allal',age:23,score:0,situation:''},
-      {id:3,gender:"Male",name:'Hamza',surname:'Serroukh',age:15,score:0,situation:''}
+      {id:3,gender:"Male",name:'Hamza',surname:'Serroukh',age:15,score:0,situation:''},
+      {id:4,gender:"Female",name:'Alexia',surname:'Yamil',age:24,score:0,situation:''}
     ],
     count:0,
     showBlocks:true,
@@ -55,48 +54,26 @@ class App extends Component {
   }
   
   render(){
-    const style = {
-      backgroundColor:'green',
-      color:'white',
-      ':hover':{
-        backgroundColor:'salmon',
-        color:'white'
-      }
-    };
     let persons=null;
     if(this.state.showBlocks){
-      style.backgroundColor="red";
       persons=(
-        <div>
-        {this.state.persons.map((person,index)=>{
-                return(
-                  <Person
-           delete={()=>this.deletePersonHandler(person.id)}       
-           key={person.id}        
-          name={person.name} 
-          surname={person.surname}
-          age={person.age}
-          click={()=>this.switchScoreHandler(person.id)}
-          changed={(e)=>this.ageChanged(e,person.id)}
-          situation={person.situation}
-          
-          >
-            {person.score}
-            </Person>
-                )
-              })}
-        </div>
+        <Persons
+        persons={this.state.persons}
+        deleteClicked={this.deletePersonHandler}
+        switchClicked={this.switchScoreHandler}
+        ageChanged={this.ageChanged}
+        />
               );
     }
-    
-          
+
   return (
-    <div className="App">
+    <div className={classes.App}>
       {persons}
-      <div>
-      <button  onClick={this.switchNameHander.bind(this,"********")}>Hide Names</button>
-      <button  style={style} onClick={this.hideBlocksHander}>{this.state.showBlocks? "Hide Blocks":"Show Blocks"}</button>
-      </div>
+      <Cockpit
+      switchClicked={()=>this.switchNameHander("*****")}
+      hideClicked={()=>this.hideBlocksHander()}
+      showBlocks={this.state.showBlocks}
+      />
     </div>
     //React.createElement("div",{className:'Person'},React.createElement(Person,{name:'Yassine',surname:'Ezzaghouani',age:'26'},null))
   
@@ -104,4 +81,4 @@ class App extends Component {
 }
 }
 
-export default Radium(App);
+export default App;
